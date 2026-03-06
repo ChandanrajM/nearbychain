@@ -36,3 +36,6 @@ build/
 
 # Mac/Linux swap files
 *.swp
+
+# Ignore git's automatic line ending normalization for node_modules
+node_modules/
