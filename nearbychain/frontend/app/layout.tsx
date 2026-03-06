@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import { WalletProvider } from "@/hooks/useWallet";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50`}>
-        <Navbar />
-        <div className="container">
-          {children}
-        </div>
+        <WalletProvider>
+          <Navbar />
+          <div className="container">
+            {children}
+          </div>
+        </WalletProvider>
       </body>
     </html>
   );
