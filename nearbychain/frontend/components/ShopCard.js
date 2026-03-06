@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { handlePrintRequest } from "../utils/request";
 
@@ -18,21 +20,69 @@ export default function ShopCard({ shop }) {
   };
 
   return (
-    <div className="bg-white p-6 shadow rounded flex flex-col justify-between h-full">
-      <div>
-        <h2 className="text-xl font-bold">{shop.name}</h2>
-        {shop.distance && <p>Distance: {shop.distance} km</p>}
-        <p>Rating ⭐ {shop.rating}</p>
+    <div className="shop-card">
+      {/* Shop Header */}
+      <div className="shop-header">
+        <div className="shop-icon">🏪</div>
+        <div className="shop-rating">
+          <span>⭐</span>
+          <span>{shop.rating || "4.5"}</span>
+        </div>
       </div>
-      <div className="mt-4">
+
+      {/* Shop Body */}
+      <div className="shop-body">
+        <h3 className="shop-name">{shop.name}</h3>
+        
+        {shop.category && (
+          <span className="shop-category">
+            {shop.category.charAt(0).toUpperCase() + shop.category.slice(1)}
+          </span>
+        )}
+
+        <div style={{ marginBottom: "1rem" }}>
+          {shop.distance && (
+            <p className="shop-info">
+              📍 {shop.distance} km away
+            </p>
+          )}
+          
+          {shop.address && (
+            <p className="shop-info">
+              📮 {shop.address}
+            </p>
+          )}
+
+          {shop.phone && (
+            <p className="shop-info">
+              📞 {shop.phone}
+            </p>
+          )}
+        </div>
+
+        {/* Action Button */}
         <button
           onClick={handleOrder}
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+          className="btn btn-primary"
+          style={{ width: "100%" }}
         >
-          {loading ? "Processing..." : "Request Service"}
+          {loading ? "⏳ Processing..." : "🛒 Request Service"}
         </button>
-        {message && <p className="mt-2 text-green-600">{message}</p>}
+
+        {message && (
+          <div style={{ 
+            marginTop: "0.75rem", 
+            padding: "0.75rem", 
+            borderRadius: "var(--radius)",
+            backgroundColor: message.includes("Failed") ? "#fee2e2" : "#d1fae5",
+            color: message.includes("Failed") ? "#991b1b" : "#065f46",
+            fontSize: "0.875rem",
+            fontWeight: "500"
+          }}>
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );
